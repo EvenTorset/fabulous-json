@@ -325,7 +325,10 @@ function stringify(value: any, options?: StringifyOptions): string | undefined {
           tableOfObjects(column, subcolumnOrder)
         if (subtable !== null) {
           // Subtable
-          columnWidths[i] = subtable[0].length
+          columnWidths[i] = 0
+          for (let j = 0; j < subtable.length; j++) {
+            columnWidths[i] = Math.max(columnWidths[i], subtable[j].length)
+          }
           columns[i] = subtable
           continue
         }
@@ -387,10 +390,11 @@ function stringify(value: any, options?: StringifyOptions): string | undefined {
           tableOfObjects(column, subcolumnOrder)
         if (subtable !== null) {
           // Subtable
+          columnWidths[columnKey] = 0
           for (let j = 0; j < subtable.length; j++) {
             subtable[j] = jsonKey + ': ' + subtable[j]
+            columnWidths[columnKey] = Math.max(columnWidths[columnKey], subtable[j].length)
           }
-          columnWidths[columnKey] = subtable[0].length
           columns[columnKey] = subtable
           continue
         }
