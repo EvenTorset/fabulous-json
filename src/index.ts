@@ -248,7 +248,7 @@ function stringify(value: any, options?: StringifyOptions): string | undefined {
         const columnOrder = getTableColumnOrder(rval, maxObjectProperties, tableMinSharedKeys)
         if (columnOrder !== null) {
           const isArray = Array.isArray(rval[keys[0]])
-          if (columnOrder.length > (isArray ? maxArrayItems : maxObjectProperties)) return null
+          if (columnOrder.length > (isArray ? maxArrayItems : maxObjectProperties)) break table
 
           const jsonKeys = keys.map(k => JSON.stringify(k))
           const keyColumnWidth = arrMax(jsonKeys.map(k => k.length)) + 1
@@ -278,12 +278,12 @@ function stringify(value: any, options?: StringifyOptions): string | undefined {
         nestedItems ||= processed.nested
         return processed.result !== undefined ? keyString + processed.result : undefined
       }).filter(x => x !== undefined)
-  
+
       return {
         result: formatObject(
-          items, 
-          depth, 
-          nestedItems, 
+          items,
+          depth,
+          nestedItems,
           keyLength,
           allowInline === undefined || allowInline.bind(parentObj)(key, val)
         ),
