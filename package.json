@@ -1,0 +1,38 @@
+{
+  "name": "fabulous-json",
+  "version": "0.1.0",
+  "description": "Yet another JSON stringifier that outputs fabulous-looking JSON strings.",
+  "license": "Unlicense",
+  "author": "CCCode",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "test": "vitest",
+    "watch": "tsc --p tsconfig.json --watch",
+    "build": "tsc --p tsconfig.json"
+  },
+  "files": [
+    "/dist"
+  ],
+  "keywords": [
+    "json",
+    "stringify",
+    "pretty",
+    "prettify",
+    "prettifier"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EvenTorset/fabulous-json.git"
+  },
+  "bugs": {
+    "url": "https://github.com/EvenTorset/fabulous-json/issues"
+  },
+  "devDependencies": {
+    "dedent": "^1.5.3",
+    "typescript": "^5.8.2",
+    "vitest": "^3.0.7"
+  }
+}

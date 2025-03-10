@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "declaration": true,
+    "sourceMap": true,
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "lib": ["es2024"],
+    "libReplacement": false,
+    "outDir": "dist"
+  },
+  "files": ["src/index.ts"]
+}
