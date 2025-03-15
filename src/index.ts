@@ -18,6 +18,14 @@ export type StringifyOptions = {
    */
   indent?: string | number
   /**
+   * Either a string to add to the start of indented lines, or a number of
+   * spaces to add instead. This can be useful for generating JSON strings that
+   * are going to be inserted into other indented text.
+   * 
+   * Defauls to `0`.
+   */
+  prefixIndent?: string | number
+  /**
    * A function that determines if an array or object is allowed to be inlined.
    * The other rules still apply, but this function can be used to stop certain
    * values from being inlined.
@@ -157,6 +165,13 @@ function stringify(value: any, options?: StringifyOptions): string | undefined {
   if (indent.length === 0) {
     return JSON.stringify(value, options?.replace)
   }
+
+  const prefixIndent =
+    typeof options === 'object' && 'prefixIndent' in options ?
+      typeof options.prefixIndent === 'number' ? ' '.repeat(Math.max(0, options.prefixIndent)) :
+      typeof options.prefixIndent === 'string' ? options.prefixIndent :
+      '' :
+    ''
 
   if (options && 'replace' in options && typeof options.replace !== 'function') {
     throw new Error(`'replace' must be a function.`)
@@ -492,12 +507,12 @@ function stringify(value: any, options?: StringifyOptions): string | undefined {
       const mean = sum(itemLengths) / items.length
       if ((max - min) < Math.max(4, mean * 0.25)) {
         const [ itemsWide, columnWidths ] = findMaxItemsWide(items, itemLengths, maxLineLength)
-        return '[\n' + arrIndent + Array(Math.ceil(items.length / itemsWide)).fill(null).map((_, i) => {
+        return '[\n' + prefixIndent + arrIndent + Array(Math.ceil(items.length / itemsWide)).fill(null).map((_, i) => {
           return joinColumns(items.slice(i * itemsWide, (i + 1) * itemsWide), columnWidths)
-        }).join(',\n' + arrIndent) + '\n' + indent.repeat(depth) + ']'
+        }).join(',\n' + prefixIndent + arrIndent) + '\n' + indent.repeat(depth) + ']'
       }
     }
-    return '[\n' + arrIndent + items.join(',\n' + arrIndent) + '\n' + indent.repeat(depth) + ']'
+    return '[\n' + prefixIndent + arrIndent + items.join(',\n' + prefixIndent + arrIndent) + '\n' + prefixIndent + indent.repeat(depth) + ']'
   }
 
   function formatObject(
@@ -515,7 +530,7 @@ function stringify(value: any, options?: StringifyOptions): string | undefined {
       }
     }
     const objIndent = indent.repeat(depth + 1)
-    return '{\n' + objIndent + items.join(',\n' + objIndent) + '\n' + indent.repeat(depth) + '}'
+    return '{\n' + prefixIndent + objIndent + items.join(',\n' + prefixIndent + objIndent) + '\n' + prefixIndent + indent.repeat(depth) + '}'
   }
 
   return processValue('', value, 0, { '': value })?.result

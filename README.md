@@ -44,6 +44,11 @@ Either the string to use as the indent, or the number of spaces to use as it.
 
 Defaults to `2`.
 
+### prefixIndent
+Either a string to add to the start of indented lines, or a number of spaces to add instead. This can be useful for generating JSON strings that are going to be inserted into other indented text.
+
+Defauls to `0`.
+
 ### allowInline
 A function that determines if an array or object is allowed to be inlined. The other rules still apply, but this function can be used to stop certain values from being inlined.
 
