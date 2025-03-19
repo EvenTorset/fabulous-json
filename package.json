@@ -1,6 +1,6 @@
 {
   "name": "fabulous-json",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Yet another JSON stringifier that outputs fabulous-looking JSON strings.",
   "license": "Unlicense",
   "author": "CCCode",
