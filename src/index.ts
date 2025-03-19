@@ -363,6 +363,9 @@ function stringify(value: any, options?: StringifyOptions): string | undefined {
       }
       if (tableDecimalAlignment && numeric) {
         columns[i] = decimalAlignment(columns[i])
+        for (let j = 0; j < columns[i].length; j++) {
+          columnWidths[i] = Math.max(columnWidths[i] ?? 0, columns[i][j].length)
+        }
       }
     }
 
