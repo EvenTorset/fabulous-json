@@ -364,7 +364,7 @@ function stringify(value: any, options?: StringifyOptions): string | undefined {
       if (tableDecimalAlignment && numeric) {
         columns[i] = decimalAlignment(columns[i])
         for (let j = 0; j < columns[i].length; j++) {
-          columnWidths[i] = Math.max(columnWidths[i] ?? 0, columns[i][j].length)
+          columnWidths[i] = Math.max(columnWidths[i] ?? 0, columns[i][j]?.length ?? 0)
         }
       }
     }
@@ -410,6 +410,10 @@ function stringify(value: any, options?: StringifyOptions): string | undefined {
           // Subtable
           columnWidths[columnKey] = 0
           for (let j = 0; j < subtable.length; j++) {
+            if (subtable[j].length === 0) {
+              subtable[j] = undefined
+              continue
+            }
             subtable[j] = jsonKey + ': ' + subtable[j]
             columnWidths[columnKey] = Math.max(columnWidths[columnKey], subtable[j].length)
           }

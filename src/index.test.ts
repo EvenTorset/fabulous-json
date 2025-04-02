@@ -220,3 +220,22 @@ test('tables', () => {
     }
   `)
 })
+
+test('tables with missing properties', () => {
+  const obj = {
+    a: { type: 35, rotation: [  0, 130, 0 ] },
+    b: { type: 35                           },
+    c: { type: 35                           },
+    d: { type: 35, rotation: [ 90,   0, 0 ] },
+    e: { type: 35                           }
+  }
+  expect(stringify(obj)).toBe(dedent`
+    {
+      "a": { "type": 35, "rotation": [  0, 130, 0 ] },
+      "b": { "type": 35                             },
+      "c": { "type": 35                             },
+      "d": { "type": 35, "rotation": [ 90,   0, 0 ] },
+      "e": { "type": 35                             }
+    }
+  `)
+})
